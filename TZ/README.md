@@ -1,6 +1,15 @@
 # Create Token Process
 
-The goal is to create a token on solana and mint it
+The goal is to create a token on solana and mint it and transfer tokens to a second account
+
+## Accounts
+
+```
+solana-keygen grind --starts-with w:1 --ignore-case
+```
+
+- wD1W4ofjrCWo4XP45chQodLtWqfE1AieU1t1QVaehBt: principal account
+- wBi5t6a8uhTtScgmi6YGwafdBkb2GGUGD1Hx4xsYJaW: secondary account
 
 ## Create Token
 A new token is created
@@ -79,7 +88,56 @@ Signature: 2AoJqKD8EFo1h3TYHb3FDwJQXCqSREH25MaJX3JN3vHzUL2nAQnP5DM5iPSdHwQ22uuua
 ```
 [Transaction](https://explorer.solana.com/tx/2AoJqKD8EFo1h3TYHb3FDwJQXCqSREH25MaJX3JN3vHzUL2nAQnP5DM5iPSdHwQ22uuuayVRJFQ7eoNHk8HXmQHf?cluster=devnet)
 
+# Wormhole - NTT
 
+## Generate NTT Program Keypair
+```console
+solana-keygen grind --starts-with ntt:1 --ignore-case
+```
+
+Output
+```
+Searching with 8 threads for:
+        1 pubkey that starts with 'ntt' and ends with ''
+Wrote keypair to NTtTAGDe3hSDaWxckAPbVkt9WwxgXrxSmGDPCCFnQm5.json
+```
+
+## Derive the 'token-authority' PDA of the newly generated NTT Program id
+```console
+ntt solana token-authority NTtTAGDe3hSDaWxckAPbVkt9WwxgXrxSmGDPCCFnQm5
+```
+
+Output:
+```
+4yGArNB7T9oR3zjyRVgVufD7bDPWzYMFP5Wf4zXYxVHE
+```
+
+## Set SPL token Mint Authority to newly generated 'token authority' PDA
+```console
+ spl-token authorize 88BfMpEab7UzeLYEQSonk78S5QFaysMGLqJb5vytE8pe mint 4yGArNB7T9oR3zjyRVgVufD7bDPWzYMFP5Wf4zXYxVHE
+```
+
+Output:
+```
+Updating 88BfMpEab7UzeLYEQSonk78S5QFaysMGLqJb5vytE8pe
+  Current mint: wD1W4ofjrCWo4XP45chQodLtWqfE1AieU1t1QVaehBt
+  New mint: 4yGArNB7T9oR3zjyRVgVufD7bDPWzYMFP5Wf4zXYxVHE
+
+Signature: 2NsXSzKVrDwvihc3P4hUz3CkstFxQMjMA4X7Ji451igxqPtGeNgZhZk5Kn3Y2tisn57uNXoqLDocNkPQUaSPEobU
+```
+
+## Deploy NTT
+```console
+ntt add-chain Solana --latest --mode burning --token 88BfMpEab7UzeLYEQSonk78S5QFaysMGLqJb5vytE8pe --payer ./wD1W4ofjrCWo4XP45chQodLtWqfE1AieU1t1QVaehBt.json --program-key ./NTtTAGDe3hSDaWxckAPbVkt9WwxgXrxSmGDPCCFnQm5.json
+```
+
+Output:
+```
+Preparing worktree (detached HEAD 1193a4a)
+HEAD is now at 1193a4a evm/src/interfaces: update topic hashes (#396)
+Created worktree at .deployments/Solana-1.0.0 from tag v1.0.0+solana
+Anchor CLI version must be 0.29.0 but is 0.30.1
+```
 
 
 

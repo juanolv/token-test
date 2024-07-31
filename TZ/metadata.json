@@ -1,0 +1,12 @@
+{
+  "name": "Test Zero",
+  "symbol": "TZ",
+  "description": "Test Zero Token",
+  "image": "",
+  "attributes": [
+    {
+      "trait_type": "Item",
+      "value": "Test Zero"
+    }
+  ]
+}

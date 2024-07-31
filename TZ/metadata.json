@@ -2,7 +2,7 @@
   "name": "Test Zero",
   "symbol": "TZ",
   "description": "Test Zero Token",
-  "image": "",
+  "image": "https://raw.githubusercontent.com/juanolv/token-test/505a5d07090002f192d3450c4d32b108771db63c/TZ/Zero.jpg",
   "attributes": [
     {
       "trait_type": "Item",
